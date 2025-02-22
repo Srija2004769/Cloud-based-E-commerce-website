@@ -29,10 +29,10 @@ a{
 p{
     color: black;
 }
-/* .container{
+ .container{
     max-width: 1300px;
     margin: auto;
-} */
+}
 .row{
    display: flex;
    align-items: center;
@@ -47,16 +47,16 @@ p{
 }
 .col img{
     max-width: 100%;
-    padding: 50px 0;
+    /* padding: 50px 0; */
 }
 .col h1{
     font-size: 50px;
     line-height: 50px;
-    padding-left: 100px;
+    /* padding-left: 100px; */
     margin: 50px 0;
 }
 .col p{
-    margin-left: 100px;
+    /* margin-left: 100px; */
     font-size: 30px;
 }
 .btn{
@@ -72,6 +72,18 @@ p{
 .btn:hover{
     background: rgb(0, 36, 52);
 }
+.categories{
+    margin: 70px 0;
+}
+.categories .row{
+    display: flex;
+    justify-content: space-around;
+}
+.categories .col-1{
+    flex-basis: 25%;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
 .col-1{
     flex-basis: 30%;
     min-width: 250px;
@@ -84,16 +96,205 @@ p{
 .small-container{
     max-width: 1080px;
     margin: auto;
-    padding-left: 50px;
-    padding-right: 50px;
+    /* padding-left: 50px;
+    padding-right: 50px; */
 }
 .col-2 img{
     flex-basis:25%;
-    padding: 10px 0;
+    /* padding: 10px 0; */
     width: 50%;
     height: 80%;}
 .col-2{
     flex-basis: 25%;
     min-width: 200px;
     margin-bottom: 30px;
+    transition: transform 0.5s;
+}
+.title{
+    text-align: center;
+    margin: 100px 0;
+    position: relative;
+    line-height: 60px;
+    color:black;
+}
+.title::after{
+    content: "";
+    background: teal;
+    width:80px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+h4{
+    color:black;
+    font-weight: normal;
+}
+.col-2 p{
+    font-size:14px;
+}
+.rating .fa{
+    color: orange;
+}
+.col-2:hover{
+    transform:translateY(-5px);
+}
+/* offer */
+.offer{
+    background-color: #f7f7f7;
+    margin-top: 50px;
+    padding: 30px 0;
+
+}
+.small{
+    font-size: 12px;
+}
+/* testimonial */
+.testimonial{
+    background-color: #f7f7f7;
+    margin-top: 50px;
+    padding: 30px 0;
+}
+.testimonial .col-2{
+    text-align: center;
+    padding:40px 20px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.testimonial .col-2 img{
+    width: 50px;
+    margin-top: 20px;
+    border-radius:50%;
+}
+.testimonial .col-2:hover{
+    transform: translateY((-10px));
+}
+.col-2 p{
+    font-size: 15px;
+    margin: 12px 0;
+    color: #777;
+}
+.testimonial .col-2 h3{
+    font-weight: 600;
+    color: #555;
+}
+/* brands */
+.brands{
+    margin:100px auto;
+}
+.col-3{
+    width: 160px;
+
+}
+.col-3 img{
+    width:100%;
+    cursor:pointer;
+    filter: grayscale(100%);
+}
+.col-3 img:hover{
+    filter:grayscale(0);
+}
+/* ---footer----     */
+.footer{
+    background: #000;
+    color: #8a8a8a;
+    font-size: 14px;
+    padding: 60px 0 20px;
+}
+.footer p{
+    color: #8a8a8a;
+}
+.footer h3{
+    color: #fff;
+    margin-bottom: 20px;
+}
+.footer-col-1, .footer-col-2, .footer-col-3, .footer-col-4{
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+.footer-col-1{
+    flex-basis: 30%;
+}
+.footer-col-2{
+    flex: 1;
+    text-align: center;
+}
+.footer-col-2 img{
+    width: 180px;
+    margin-bottom: 20px;
+}
+.footer-col-3, .footer-col-4{
+    flex-basis: 12%;
+    text-align: center;
+}
+ul{
+    list-style-type: none;
+}
+/* reducing image size  */
+
+.app-logo{
+    margin-top: 20px;
+
+}
+.app-logo img{
+    width: 100px;
+}
+.footer hr{
+    border: none;
+    background: #b5b5b5;
+    height: 1px;
+    margin: 20px 0;
+}
+.copy-right-text{
+    margin-top: 20px;
+    text-align: center;
+}
+.menu-icon{
+    width: 28px;
+    margin-left: 20px;
+    display: none;
+}
+/* media query for menu */
+@media only screen and (max-width: 800px){
+    nav ul{
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: #333;
+        width: 100%;
+        overflow: hidden;
+        transition: max-height 0.5s;
+    }
+    nav ul li{
+        display: block;
+        margin-right: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    nav ul li a{
+        color: white;
+    }
+    .menu-icon{
+        display: block;
+    }
+    .menu-icon{
+        display: block;
+        cursor: pointer;
+    }
+}
+@media only screen and (max-width: 600px){
+    .row{
+        text-align: center;
+    }
+    .col-2, .col-1, .col-3{
+        flex-basis: 100%;
+    }
+    .title{
+        margin: 0;
+    }
+    .col-2 img{
+        width: 300px;
+    }
 }
