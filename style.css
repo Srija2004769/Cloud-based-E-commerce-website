@@ -319,6 +319,7 @@ select:focus{
     margin-top: 80px;
 }
 .single-product .col-2 img{
+    width: 100%;
     padding: 0;
 }
 .single-product .col-2{

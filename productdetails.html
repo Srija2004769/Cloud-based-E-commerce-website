@@ -11,40 +11,39 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="images/logo.png" width="130px" >
+                    <a href="index.html"><img src="images/logo.png" width="130px" ></a>
                     
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="#"> Home</a></li>
+                        <li><a href="index.html"> Home</a></li>
                         <li><a href="products.html"> Products</a></li>
                         <li><a href="#"> About</a></li>
                         <li><a href="#"> Contact</a></li>
-                        <li><a href="#"> Account</a></li>
+                        <li><a href="account.html"> Account</a></li>
                     </ul>
                 </nav>
-                <img src="images/cart.png" width="30px" height="30px">
+                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
-        
         </div>
         <!-- ---------single product details------------ -->
          <div class="small-container single-product">
             <div class="row">
                 <div class="col-2">
-                    <img src="images/gallery-1.jpg" width="100%" id="productimg">
+                    <img src="images/gallery-1.png" width="100%" id="productimg">
                   <div class="small-img-row">
                     <div class="small-img-col">
-                        <img src="imgaes/gallery-2.png" width="100%" id="smallimg" >
+                        <img src="images/gallery-2.png" width="100%" id="smallimg" >
                     </div>
                     <div class="small-img-col">
-                        <img src="imgaes/gallery-3.png" width="100%" id="smallimg" >
+                        <img src="images/gallery-3.png" width="100%" id="smallimg" >
                     </div>
                     <div class="small-img-col">
-                        <img src="imgaes/gallery-4.png" width="100%" id="smallimg" >
+                        <img src="images/gallery-4.png" width="100%" id="smallimg" >
                     </div>
                     <div class="small-img-col">
-                        <img src="imgaes/gallery-5.png" width="100%" id="smallimg" >
+                        <img src="images/gallery-5.png" width="100%" id="smallimg" >
                     </div>
                   </div>
                 </div>
@@ -183,7 +182,7 @@
            <!-- ----------------js for product gallery--------------- -->
             <script>
                 var productimg = document.getElementById("productimg");
-                var smallimg= documeent.getElementById("smallimg");
+                var Smallimg= documeent.getElementById("smallimg");
                 Smallimg[0].onclick=function(){
                     productimg.src=Smallimg[0].src;
                 }
