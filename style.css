@@ -32,6 +32,7 @@ p{
  .container{
     max-width: 1300px;
     margin: auto;
+    /* background-color: #c5f2ac; */
 }
 .row{
    display: flex;
@@ -52,11 +53,10 @@ p{
 .col h1{
     font-size: 50px;
     line-height: 50px;
-    /* padding-left: 100px; */
     margin: 50px 0;
 }
 .col p{
-    /* margin-left: 100px; */
+   
     font-size: 30px;
 }
 .btn{
@@ -96,12 +96,11 @@ p{
 .small-container{
     max-width: 1080px;
     margin: auto;
-    /* padding-left: 50px;
-    padding-right: 50px; */
+   
 }
 .col-2 img{
     flex-basis:25%;
-    /* padding: 10px 0; */
+    
     width: 50%;
     height: 80%;}
 .col-2{
@@ -284,6 +283,197 @@ ul{
         cursor: pointer;
     }
 }
+/* -------------------all products page------------------- */
+.row-2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 100px auto 50px;
+}
+select{
+    border: 1px solid black;
+    padding: 5px;
+}
+select:focus{
+    outline: none;
+}
+.page-btn{
+    margin: 0 auto 80px;
+}
+.page-btn span{
+    display: inline-block;
+    border:1px solid #1a8bb1;
+    margin-left:10px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+}
+.page-btn span:hover{
+    background: teal;
+    color: darkcyan;
+}
+/* ----------single product details---------- */
+.single-product{
+    margin-top: 80px;
+}
+.single-product .col-2 img{
+    padding: 0;
+}
+.single-product .col-2{
+    padding: 20px;
+}
+.single-product h4{
+    margin:20px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+.single-product select{
+    display:block;
+    padding:10px;
+    margin-top:20px;
+}
+.single-product input{
+    width:50px;
+    height: 40px;
+    padding-left: 10px;
+    font-size:20px;
+    margin-right:10px;
+    border:#1a8bb1
+}
+input:focus{
+    outline: black;
+}
+.small-img-row{
+    display: flex;
+    justify-content: space-between;
+}
+.small-img-col{
+    flex-basis:24%;
+    cursor: pointer;
+}
+/* ----------cart items-------- */
+
+cart-page{
+    margin: 80px auto;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.cart-info{
+    display: flex;
+    flex-wrap: wrap;
+}
+td img{
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+th{
+    text-align: left;
+    padding: 5px;
+    color: #b5b5b5;
+    background-color: aliceblue;
+    font-weight: normal;
+}
+td{
+    padding: 5px;
+
+}
+td input{
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+}
+td a{
+    color: #b5b5b5;
+    font-size: 12px;
+}
+.total-price{
+    display: flex;
+    justify-content: flex-end;
+}
+.total-price table{
+    border-top: 3px solid #8a8a8a;
+    width: 100%;
+    max-width: 400px;
+}
+td:last-child{
+    text-align: right;
+}
+th:last-child{
+    text-align: right;
+}
+/* ----------account-page------------ */
+.account-page{
+    padding:50px 0;
+    background: none;
+
+}
+.form-container{
+    background: #d0dce0;
+    width:300px;
+    height:400px;
+    position:relative;
+    text-align: center;
+    padding: 20px 0;
+    margin: auto;
+    box-shadow: #4d5355;
+    overflow: hidden;
+}
+.form-container span{
+    font-weight: bold;
+    padding:0 10px;
+    color:#333;
+    cursor: pointer;
+    width: 100px;
+    display: inline-block;
+}
+.form-btn{
+    display: inline-block;
+    
+
+}
+.form-container form{
+    max-width: 300px;
+    padding:0% 20px;
+    position: absolute;
+    top: 140px;
+    transition : transform 1s;
+}
+form input{
+    width: 70%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border:1px solid #1a8bb1;
+}
+form .btn{
+    width: 50%;
+    border: none;
+    cursor: pointer;
+    margin:10px 0;
+}
+form .btn:focus{
+    outline:none;
+}
+#loginForm{
+    left: -300px;
+}
+#regForm{
+    left: 0;
+}
+#indicator{
+    width: 80px;
+    border: none;
+    background: #1a8bb1;
+    height: 3px;
+    margin-top: 8px;
+    transform: translateX(100px);
+    transition : transform 1s;
+}
 @media only screen and (max-width: 600px){
     .row{
         text-align: center;
@@ -297,4 +487,18 @@ ul{
     .col-2 img{
         width: 300px;
     }
+    .single-product .row{
+        text-align: left;
+    }
+    .single-product .col-2{
+        padding:20px 0;
+    }
+    .single-product h1{
+        font-size: 26px;
+        line-height: 32px;
+    }
+    .cart-info p{
+        display:none;
+    }
+
 }

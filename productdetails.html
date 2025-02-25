@@ -11,65 +11,71 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="130px" ></a>
+                    <img src="images/logo.png" width="130px" >
+                    
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html"> Home</a></li>
+                        <li><a href="#"> Home</a></li>
                         <li><a href="products.html"> Products</a></li>
                         <li><a href="#"> About</a></li>
                         <li><a href="#"> Contact</a></li>
-                        <li><a href="account.html"> Account</a></li>
+                        <li><a href="#"> Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
+                <img src="images/cart.png" width="30px" height="30px">
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         
         </div>
+        <!-- ---------single product details------------ -->
+         <div class="small-container single-product">
+            <div class="row">
+                <div class="col-2">
+                    <img src="images/gallery-1.jpg" width="100%" id="productimg">
+                  <div class="small-img-row">
+                    <div class="small-img-col">
+                        <img src="imgaes/gallery-2.png" width="100%" id="smallimg" >
+                    </div>
+                    <div class="small-img-col">
+                        <img src="imgaes/gallery-3.png" width="100%" id="smallimg" >
+                    </div>
+                    <div class="small-img-col">
+                        <img src="imgaes/gallery-4.png" width="100%" id="smallimg" >
+                    </div>
+                    <div class="small-img-col">
+                        <img src="imgaes/gallery-5.png" width="100%" id="smallimg" >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2">
+                    <p>Home/kurti-set</p>
+                    <h1>Biba Olive Green Embroidered Kurti set</h1>
+                    <h4>$50.00</h4>
+                    <select >
+                        <option >Select Size</option>
+                        <option >XXL</option>
+                        <option >XL</option>
+                        <option >L</option>
+                        <option >M</option>
+                        <option >S</option>
+                    </select>
+                    <input type="number" value="1">
+                    <a href="" class="btn">Add to cart</a>
+                    <h3>Product Details </h3>
+                    <p>--------------------------------------------</p>
+                </div>
+            </div>
+         </div>
+         <!-- -----------title-------------- -->
+
         
          <!-- All products -->
         <div class="small-container">
-            <div class="row row-2">
-                <h2>All Products</h2>
-                <select>
-                    <option>Default Sorting</option>
-                    <option>Sort by Price</option>
-                    <option>Sort by Popularity</option>
-                    <option>Sort by Rating</option>
-                    <option>Sort by Sale</option>
-                </select>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <a href="productdetails.html"><img src="images/T-shirt.png"></a>
-                    <a href="productdetails.html"><h4>Cotton T-shirt</h4></a>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-2">
-                   <a href="productdetails.html"><img src="images/silk-saree.png"></a>
-                    <a href="productdetails.html"><h4>Kanchipuram Silk Saree</h4></a>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <p>$100.00</p>   
-                </div>
-        
              <div class="row">
                 <div class="col-2">
-                   <a href="productdetails.html"> <img src="images/latest-product-1.png"></a>
-                    <a href="productdetails.html"><h4>H&M Cotton jeans top</h4></a>
+                    <img src="images/latest-product-1.png">
+                    <h4>H&M Cotton jeans top</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -80,8 +86,8 @@
                     <p>$50.00</p>
                  </div>
                 <div class="col-2">
-                   <a href="productdetails.html"> <img src="images/latest-product-2.png"></a>
-                    <a href="productdetails.html"><h4>New beige salwar suit <br>with patola patch work</h4></a>
+                    <img src="images/latest-product-2.png">
+                    <h4>New beige salwar suit <br>with patola patch work</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -90,11 +96,10 @@
                         <i class="fa fa-star-half-o"></i>
                     </div>
                     <p>$80.00</p>
-                  
                 </div>
                 <div class="col-2">
-                    <a href="productdetails.html"><img src="images/latest-product-3.png" style="height: 200px;"></a>
-                    <a href="productdetails.html"><h4>Nishideek Fashion Women's Satin Jacket-Style Shrug</h4></a>
+                    <img src="images/latest-product-3.png" style="height: 200px;">
+                    <h4>Nishideek Fashion Women's Satin Jacket-Style Shrug</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -103,11 +108,10 @@
                         <i class="fa fa-star-half-o"></i>
                     </div>
                     <p>$45.00</p>
-                 
                 </div>
                 <div class="col-2">
-                   <a href="productdetails.html"> <img src="images/latest-product-4.png" style="height: 200px;"></a>
-                    <a href="productdetails.html"><h4>Women Embroidered Kalidar Kurta</h4></a>
+                    <img src="images/latest-product-4.png" style="height: 200px;">
+                    <h4>Women Embroidered Kalidar Kurta</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -118,13 +122,7 @@
                     <p>$63.00</p>
                 </div>
             </div>
-            <div class="page-btn">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>&#8594;</span>
-            </div>
+            
         </div>
          <!-- footer -->
           <div class="footer">
@@ -182,5 +180,22 @@
                 }
             }
            </script>
+           <!-- ----------------js for product gallery--------------- -->
+            <script>
+                var productimg = document.getElementById("productimg");
+                var smallimg= documeent.getElementById("smallimg");
+                Smallimg[0].onclick=function(){
+                    productimg.src=Smallimg[0].src;
+                }
+                Smallimg[1].onclick=function(){
+                    productimg.src=Smallimg[1].src;
+                }
+                Smallimg[2].onclick=function(){
+                    productimg.src=Smallimg[2].src;
+                }
+                Smallimg[3].onclick=function(){
+                    productimg.src=Smallimg[3].src;
+                }
+            </script>
     </body>
 </html>
