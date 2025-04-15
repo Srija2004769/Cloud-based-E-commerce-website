@@ -4,59 +4,71 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BYTEBUY |All products</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="static/css/style.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="130px" ></a>
-                    
+                    <a href="index.html"><img src="static/images/logo.png" width="130px" ></a>
                 </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="index.html"> Home</a></li>
                         <li><a href="products.html"> Products</a></li>
                         <li><a href="#"> About</a></li>
-                        <li><a href="#"> Contact</a></li>
+                        <li><a href="contact.html"> Contact</a></li>
                         <li><a href="account.html"> Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
-                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+                <a href="cart.html"><img src="static/images/cart.png" width="30px" height="30px"></a>
+                <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
-        <!-- ------------account-page------------------ -->
-         <div class="account-page">
-            <div class="container">
-                <div class="row">
-                    
-                    <div class="col-2">
-                        <div class="form-container">
-                            <div class="form-btn">
-                                <span onclick="login()">Login</span>
-                                <span onclick="register()">Register</span>
-                                <hr id="indicator">
-                            </div>
-                            <form id="loginForm">
-                                <input type="text" placeholder="Username">
-                                <input type="password" placeholder="Password">
-                                <button type="submit" class="btn">Login</button><br>
-                                <a href="" style="font-size: 10px;">Forgot Password</a>
-                            </form>
-                            <form id="regForm">
-                                <input type="text" placeholder="Username">
-                                <input type="password" placeholder="Password">
-                                <input type="email" placeholder="Email">
-                                <button type="submit" class="btn">Register Now</button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-         </div>
         
+        </div>
+        
+         <!-- All products -->
+        <div class="small-container">
+            <div class="row row-2">
+                <h2>All Products</h2>
+                <select>
+                    <option>Default Sorting</option>
+                    <option>Sort by Price</option>
+                    <option>Sort by Popularity</option>
+                    <option>Sort by Rating</option>
+                    <option>Sort by Sale</option>
+                </select>
+            </div>
+            <div class="row">
+                {%if products %}
+                {%for product in products%}
+                <div class="col-2">
+                    <a href="{{ url_for('product_detail', id=product[0]) }}"><img src="{{product[4]}}"></a>
+                    <a href="{{ url_for('product_detail', id=product[0]) }}"><h4>{{product[1]}}</h4></a>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                    </div>
+                    <p>${{product[2]}}</p>
+                </div>
+                {%endfor%}
+                {%else%}
+                <p>No products available right now.Please try again later.</p>
+                {%endif%}
+            </div>
+            <div class="page-btn">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>&#8594;</span>
+            </div>
+        </div>
          <!-- footer -->
           <div class="footer">
             <div class="container">
@@ -67,12 +79,12 @@
                         </h3>
                         <p>Download app for Android and IOS mobile devices</p>
                         <div class="app-logo">
-                            <img src="images/play-store.png" style="height: 40px;">
-                            <img src="images/app-store.png">
+                            <img src="static/images/play-store.png" style="height: 40px;">
+                            <img src="static/images/app-store.png">
                         </div>
                     </div>
                     <div class="footer-col-2">
-                        <img src="images/logo.png" alt="">
+                        <img src="static/images/logo.png" alt="">
                         <p>Our purpose is to ensure touble free and convenient shoppping for women</p>
                     </div>
                     <div class="footer-col-3">
@@ -113,26 +125,5 @@
                 }
             }
            </script>
-            <!-- ---------------js for toggle form---------- -->
-            <script>
-                var Loginform=document.getElementById("loginForm");
-                var regForm=document.getElementById("regForm");
-                var indicator=document.getElementById("indicator")
-                function register()
-                {
-                    regForm.style.transform="translateX(0px)";
-                    Loginform.style.transform="translateX(0px)";
-                    indicator.style.transform="translateX(100px)";
-                }
-                function login()
-                {
-                    regForm.style.transform="translateX(300px)";
-                    Loginform.style.transform="translateX(300px)";
-                    indicator.style.transform="translateX(0px)";
-                }
-
-            </script>
-           
-           
     </body>
 </html>

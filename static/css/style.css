@@ -475,6 +475,123 @@ form .btn:focus{
     transform: translateX(100px);
     transition : transform 1s;
 }
+.popup-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #5b94d0; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  /* ---order-summery------ */
+  .summary-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.summary-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-info p {
+    margin: 8px 0;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.order-table th {
+    background-color: #f0f0f0;
+}
+
+.continue-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #009578;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+}
+.continue-btn:hover {
+    background-color: #007f63;
+}
+
+/* ----------profile drop down container-------- */
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: transparent;
+    color: white; /* change to your navbar text color */
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover effect */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Optional: Change text color of the dropdown button on hover */
+.dropdown:hover .dropbtn {
+    color: #ffcc00; /* example hover color */
+}
+
+
+
+
+  
 @media only screen and (max-width: 600px){
     .row{
         text-align: center;

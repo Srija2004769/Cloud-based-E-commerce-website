@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order history</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="index.html"><img src="static/images/logo.png" width="130px" ></a>
+            
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="index.html"> Home</a></li>
+                <li><a href="{{url_for('products')}}"> Products</a></li>
+                <li><a href="#"> About</a></li>
+                <li><a href="contact.html"> Contact</a></li>
+                <li><a href="{{url_for('account')}}"> Account</a></li>
+            </ul>
+        </nav>
+        <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="30px" height="30px"></a>
+        <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()">
+    </div>
+    <div class="order_history">
+        <h2>Your Orders</h2>
+        {%if orders%}
+        {% for entry in order_data %}
+            <h3>Order #{{ entry.order[0] }}</h3> <!-- order_id -->
+            <p><strong>Name:</strong> {{ entry.order[2] }}</p> <!-- full_name -->
+            <p><strong>Address:</strong> {{ entry.order[4] }}, {{ entry.order[5] }}, {{ entry.order[6] }}</p>
+            <p><strong>Payment:</strong> {{ entry.order[7] }}</p>
+            <ul>
+            {% for item in entry.items %}
+            <li>
+                <img src="{{ url_for('static', filename=item[3]) }}" width="50">
+                {{ item[2] }} - Quantity: {{ item[0] }}, Price: ${{ item[1] }}
+            </li>
+            {% endfor %}
+            </ul>
+        <hr>
+        {% endfor %}
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+
+    </div>
+
+    <!-- -------------footer---------------------- -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>
+                        Download our APP
+                    </h3>
+                    <p>Download app for Android and IOS mobile devices</p>
+                    <div class="app-logo">
+                        <img src="static/images/play-store.png" style="height: 40px;">
+                        <img src="static/images/app-store.png">
+                    </div>
+                </div>
+                <div class="footer-col-2">
+                    <img src="static/images/logo.png" alt="">
+                    <p>Our purpose is to ensure touble free and convenient shoppping for women</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful links</h3>
+                    <ul>
+                        <li>Coupouns</li>
+                        <li>Blog Posts</li>
+                        <li>Return Policy</li>
+                        <li>Joint Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us on </h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Instagram</li>
+                        <li>Twitter</li>
+                        <li>Youtube</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        <p class="copy-right-text">© 2025 Bytebuy.com | All Rights Reserved</p>      
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -4,28 +4,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BYTEBUY | My e-commerce website</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="static/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="130px" ></a>
+                    <a href="index.html"><img src="static/images/logo.png" width="130px" ></a>
                     
                 </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="index.html"> Home</a></li>
-                        <li><a href="products.html"> Products</a></li>
+                        <li><a href="{{url_for('products')}}"> Products</a></li>
                         <li><a href="#"> About</a></li>
-                        <li><a href="#"> Contact</a></li>
-                        <li><a href="account.html"> Account</a></li>
-                    </ul>
-                </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
-                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
-            </div>
+                        <li><a href="contact.html"> Contact</a></li>
+                        {%if session['username']%}
+                        <li><a href="{{url_for('order_history')}}"> My orders</a></li>
+                        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                        {%else%}
+                        <li><a href="{{url_for('account')}}"> Account</a></li>
+                        {%endif%}
+                        </ul>
+                        </nav>
+                        <a href="{{url_for('cart')}}"><img src="static/images/cart.png" width="30px" height="30px"></a>
+                        <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()">
+                        </div>
             <div class="row">
                 <div class="col">
                     <h1>
@@ -37,7 +42,7 @@
                     <a href="" class="btn">Explore Now</a>
                 </div>
                 <div class="col">
-                    <img src="images/mainpage.jpg">
+                    <img src="static/images/mainpage.jpg">
                 </div>
             </div>
         </div>
@@ -46,16 +51,16 @@
             <div class="small-container">
             <div class="row">
                 <div class="col-1">
-                    <img src="images/casual-wear.png" style="height: 200px;">
+                    <img src="static/images/casual-wear.png" style="height: 200px;">
                 </div>
                 <div class="col-1">
-                    <img src="images/formal-wear.png" style="height: 200px;">
+                    <img src="static/images/formal-wear.png" style="height: 200px;">
                 </div>
                 <div class="col-1">
-                    <img src="images/party-wear.png" style="height: 200px;">
+                    <img src="static/images/party-wear.png" style="height: 200px;">
                 </div>
                 <div class="col-1">
-                    <img src="images/sports-wear.png" style="height: 200px;">
+                    <img src="static/images/sports-wear.png" style="height: 200px;">
                 </div>
             </div>
             </div>
@@ -67,7 +72,7 @@
             </h2>
             <div class="row">
                 <div class="col-2">
-                    <img src="images/T-shirt.png">
+                    <img src="static/images/T-shirt.png">
                     <h4>Cotton T-shirt</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
@@ -79,7 +84,7 @@
                     <p>$50.00</p>
                 </div>
                 <div class="col-2">
-                    <img src="images/silk-saree.png">
+                    <img src="static/images/silk-saree.png">
                     <h4>Kanchipuram Silk Saree</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>
@@ -96,7 +101,7 @@
         </h2>
         <div class="row">
             <div class="col-2">
-                <img src="images/latest-product-1.png">
+                <img src="static/images/latest-product-1.png">
                 <h4>H&M Cotton jeans top</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -108,7 +113,7 @@
                 <p>$50.00</p>
             </div>
             <div class="col-2">
-                <img src="images/latest-product-2.png">
+                <img src="static/images/latest-product-2.png">
                 <h4>New beige salwar suit with patola patch work</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -120,7 +125,7 @@
                 <p>$80.00</p>
             </div>
             <div class="col-2">
-                <img src="images/latest-product-3.png" style="height: 200px;">
+                <img src="static/images/latest-product-3.png" style="height: 200px;">
                 <h4>Nishideek Fashion Women's Satin Jacket-Style Shrug</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -132,7 +137,7 @@
                 <p>$45.00</p>
             </div>
             <div class="col-2">
-                <img src="images/latest-product-4.png" style="height: 200px;">
+                <img src="static/images/latest-product-4.png" style="height: 200px;">
                 <h4>Women Embroidered Kalidar Kurta</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>
@@ -149,7 +154,7 @@
             <div class="small-container">
                 <div class="row">
                     <div class="col-2">
-                        <img src="images/offer-1.png" class="offer-img">
+                        <img src="static/images/offer-1.png" class="offer-img">
                     </div>
                     <div class="col-2">
                         <p>Exclusively Available on Bytebuy</p>
@@ -168,13 +173,13 @@
                     <div class="col-2">
                         <i class="fa fa-quote-left"></i>
                         <p>Bytebuy is the best e-commerce website I have ever come across. The products are of high quality and the delivery is very fast. I would recommend Bytebuy to everyone.</p>
-                        <img src="images/user-1.jpg" class="user-img">
+                        <img src="static/images/user-1.jpg" class="user-img">
                         <h6>John Doe</h6>
                     </div>
                     <div class="col-2">
                         <i class="fa fa-quote-left"></i>
                         <p>Bytebuy is the best e-commerce website I have ever come across. The products are of high quality and the delivery is very fast. I would recommend Bytebuy to everyone.</p>
-                        <img src="images/user-2.png" class="user-img">
+                        <img src="static/images/user-2.png" class="user-img">
                         <h6>Marie Parker</h6>
                     </div>
                 </div>
@@ -185,19 +190,19 @@
             <div class="small-container">
                 <div class="row">
                     <div class="col-3">
-                        <img src="images/brand-1.png" alt="">
+                        <img src="static/images/brand-1.png" alt="">
                     </div>
                     <div class="col-3">
-                        <img src="images/brand-2.png" alt="">
+                        <img src="static/images/brand-2.png" alt="">
                     </div>
                     <div class="col-3">
-                        <img src="images/brand-3.png" alt="">
+                        <img src="static/images/brand-3.png" alt="">
                     </div>
                     <div class="col-3">
-                        <img src="images/brand-4.png" alt="">
+                        <img src="static/images/brand-4.png" alt="">
                     </div>
                     <div class="col-3">
-                        <img src="images/brand-5.png" alt="">
+                        <img src="static/images/brand-5.png" alt="">
                     </div>
                 </div>
             </div>
@@ -212,12 +217,12 @@
                         </h3>
                         <p>Download app for Android and IOS mobile devices</p>
                         <div class="app-logo">
-                            <img src="images/play-store.png" style="height: 40px;">
-                            <img src="images/app-store.png">
+                            <img src="static/images/play-store.png" style="height: 40px;">
+                            <img src="static/images/app-store.png">
                         </div>
                     </div>
                     <div class="footer-col-2">
-                        <img src="images/logo.png" alt="">
+                        <img src="static/images/logo.png" alt="">
                         <p>Our purpose is to ensure touble free and convenient shoppping for women</p>
                     </div>
                     <div class="footer-col-3">

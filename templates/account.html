@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BYTEBUY |All products</title>
+        <link rel="stylesheet" href="static/css/style.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index.html"><img src="static/images/logo.png" width="130px" ></a>
+                    
+                </div>
+                <nav>
+                    <ul id="MenuItems">
+                        <li><a href="index.html"> Home</a></li>
+                        <li><a href="products.html"> Products</a></li>
+                        <li><a href="#"> About</a></li>
+                        <li><a href="contact.html"> Contact</a></li>
+                        <li><a href="account.html"> Account</a></li>
+                    </ul>
+                </nav>
+                <a href="cart.html"><img src="static/images/cart.png" width="30px" height="30px"></a>
+                <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()">
+            </div>
+        <!-- ------------account-page------------------ -->
+         <div class="account-page">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-2">
+                        <div class="form-container">
+                            <div class="form-btn">
+                                <span onclick="login()">Login</span>
+                                <span onclick="register()">Register</span>
+                                <hr id="indicator">
+                            </div>
+                            <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+                                <input type="text" name="username" placeholder="username" required>
+                                <input type="email" name="email" placeholder="email" required>
+                                <input type="password" name="password" placeholder="password">
+                                <button type="submit" class="btn">Login</button><br>
+                                <a href="" style="font-size: 10px;">Forgot Password</a>
+                            </form>
+                            <form id="regForm" method="POST" action="{{ url_for('register') }}">
+                                <input type="text" name="username" placeholder="username" required>
+
+                                <input type="password" name="password" placeholder="password" required>
+                                <input type="email" name="email" placeholder="email" required>
+                                <button type="submit" class="btn">Register Now</button>
+                            </form>
+                        </div>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                         <div id="flashMessage" class="popup-message">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                         </div>
+                        <script>
+                         setTimeout(function() {
+                         var msg = document.getElementById('flashMessage');
+                          if (msg) {
+                           msg.style.display = 'none';
+                             }
+                             }, 3000); // hide after 3 seconds
+                        </script>
+                        {% endif %}
+                        {% endwith %}
+
+                    </div>
+                    
+                 </div>
+            </div>
+         </div>
+        
+         <!-- footer -->
+          <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>
+                            Download our APP
+                        </h3>
+                        <p>Download app for Android and IOS mobile devices</p>
+                        <div class="app-logo">
+                            <img src="static/images/play-store.png" style="height: 40px;">
+                            <img src="static/images/app-store.png">
+                        </div>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="static/images/logo.png" alt="">
+                        <p>Our purpose is to ensure touble free and convenient shoppping for women</p>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful links</h3>
+                        <ul>
+                            <li>Coupouns</li>
+                            <li>Blog Posts</li>
+                            <li>Return Policy</li>
+                            <li>Joint Affiliate</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow Us on </h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Instagram</li>
+                            <li>Twitter</li>
+                            <li>Youtube</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+            <p class="copy-right-text">© 2025 Bytebuy.com | All Rights Reserved</p>      
+            </div>
+          </div>
+          <!-- js for toggle menu -->
+           <script>
+            var MenuItems = document.getElementById("MenuItems");
+            MenuItems.style.maxHeight = "0px";
+            function menutoggle(){
+                if(MenuItems.style.maxHeight == "0px")
+                {
+                    MenuItems.style.maxHeight = "200px";
+                }
+                else
+                {
+                    MenuItems.style.maxHeight = "0px";
+                }
+            }
+           </script>
+            <!-- ---------------js for toggle form---------- -->
+            <script>
+                var Loginform=document.getElementById("loginForm");
+                var regForm=document.getElementById("regForm");
+                var indicator=document.getElementById("indicator")
+                function register()
+                {
+                    regForm.style.transform="translateX(0px)";
+                    Loginform.style.transform="translateX(0px)";
+                    indicator.style.transform="translateX(100px)";
+                }
+                function login()
+                {
+                    regForm.style.transform="translateX(300px)";
+                    Loginform.style.transform="translateX(300px)";
+                    indicator.style.transform="translateX(0px)";
+                }
+
+            </script>
+           
+           
+    </body>
+</html>

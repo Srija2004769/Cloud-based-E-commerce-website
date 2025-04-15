@@ -4,14 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BYTEBUY |All products</title>
-        <link rel="stylesheet" href="style.css">
+        <!-- <link rel="stylesheet" href="static/css/style.css"> -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="images/logo.png" width="130px" >
+                    <img src="static/images/logo.png" width="130px" >
                     
                 </div>
                 <nav>
@@ -19,12 +20,12 @@
                         <li><a href="#"> Home</a></li>
                         <li><a href="products.html"> Products</a></li>
                         <li><a href="#"> About</a></li>
-                        <li><a href="#"> Contact</a></li>
+                        <li><a href="contact.html"> Contact</a></li>
                         <li><a href="#"> Account</a></li>
                     </ul>
                 </nav>
-                <img src="images/cart.png" width="30px" height="30px">
-                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
+                <img src="static/images/cart.png" width="30px" height="30px">
+                <img src="static/images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         
         </div>
@@ -36,24 +37,44 @@
                     <th>Quantity</th>
                     <th>Subtotal</th>
                 </tr>
+                {% for product in cart_items %}
                 <tr>
                     <td>
                         <div class="cart-info">
-                            <img src="images/latest-product-1.png" >
+                            <img src="{{ url_for('static', filename=product['image_url']) }}">
                             <div>
-                                <p>Womens Collar Jeans top</p>
-                                <small>Price : $50</small><br>
-                                <a href="#">Remove</a>
+                                <p>{{product['product_name']}}</p>
+                                <small>Price : ${{product['price']}}</small><br>
+                                <a href="{{ url_for('remove_from_cart', id=product['id']) }}" class="btn">Remove</a>
                             </div>
                         </div>
                     </td>
-                    <td><Input type="number" value="1"></Input></td>
-                    <td>$50.00</td>
+                    <td><input type="number" value="{{product['quantity']}}" min="1" onchange='updateCart({{ product["id"] }}, this.value)'></td>
+                    <td>${{product['subtotal']}}</td>
                 </tr>
-                <tr>
+                {%endfor%}
+                </table>
+                <div class="total_price">
+                    <table>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>${{total}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td>${{tax}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>${{grand_total}}</td>
+                        </tr>
+                        <a href="{{ url_for('checkout') }}" class="btn">Proceed to Checkout</a>
+                    </table>
+                </div>
+                <!-- <tr>
                     <td>
                         <div class="cart-info">
-                            <img src="images/latest-product-2.png" >
+                            <img src="static/images/latest-product-2.png" >
                             <div>
                                 <p>Womens Collar Jeans top</p>
                                 <small>Price : $60</small><br>
@@ -67,7 +88,7 @@
                 <tr>
                     <td>
                         <div class="cart-info">
-                            <img src="images/latest-product-3.png" >
+                            <img src="static/images/latest-product-3.png" >
                             <div>
                                 <p>Womens Collar Jeans top</p>
                                 <small>Price : $80</small><br>
@@ -78,8 +99,8 @@
                     <td><Input type="number" value="1"></Input></td>
                     <td>$80.00</td>
                 </tr>
-            </table>
-            <div class="total-price">
+            </table> -->
+            <!-- <div class="total-price">
                 <table>
                     <tr>
                         <td>Subtotal</td>
@@ -95,7 +116,7 @@
                     </tr>
                 </table>
             </div>
-         </div>
+         </div> -->
         
          <!-- footer -->
           <div class="footer">
@@ -107,12 +128,12 @@
                         </h3>
                         <p>Download app for Android and IOS mobile devices</p>
                         <div class="app-logo">
-                            <img src="images/play-store.png" style="height: 40px;">
-                            <img src="images/app-store.png">
+                            <img src="static/images/play-store.png" style="height: 40px;">
+                            <img src="static/images/app-store.png">
                         </div>
                     </div>
                     <div class="footer-col-2">
-                        <img src="images/logo.png" alt="">
+                        <img src="static/images/logo.png" alt="">
                         <p>Our purpose is to ensure touble free and convenient shoppping for women</p>
                     </div>
                     <div class="footer-col-3">
@@ -152,8 +173,17 @@
                     MenuItems.style.maxHeight = "0px";
                 }
             }
+    function updateCart(productId, newQuantity) {
+        fetch(`/update_cart/${productId}?quantity=${newQuantity}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload page to update totals
+                } else {
+                    alert("Failed to update cart");
+                }
+            });
+    }
            </script>
-
-          
     </body>
 </html>

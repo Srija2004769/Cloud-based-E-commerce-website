@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Checkout</h2>
+        <form action="{{ url_for('process_checkout') }}" method="POST">
+            <label for="full_name">Full Name:</label>
+            <input type="text" name="full_name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+
+            <label for="address">Address:</label>
+            <textarea name="address" required></textarea>
+
+            <label for="city">City:</label>
+            <input type="text" name="city" required>
+
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" name="zip_code" required>
+
+            <label for="payment_method">Payment Method:</label>
+            <select name="payment_method" required>
+                <option value="cod">Cash on Delivery</option>
+                <option value="card">Card Payment (mock)</option>
+                <option value="paypal">PayPal (mock)</option>
+                <option value="bank_transfer">Bank Transfer (mock)</option> 
+            </select>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>
