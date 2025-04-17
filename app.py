@@ -264,6 +264,5 @@ def wishlist():
     return render_template('wishlist.html', products=products)
 
 
-
 if __name__=="__main__":
     app.run(debug=True)
