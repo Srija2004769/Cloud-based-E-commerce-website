@@ -40,8 +40,9 @@
         <div class="dashboard">
         <div class="sidebar">
             <h2>My Account</h2>
-            <button onclick="showTab('orders')">📦 Orders</button>
-            <button onclick="{{ url_for('wishlist') }}">❤️ Wishlist</button>
+            <!-- <button onclick="showTab('orders')">📦 Orders</button> -->
+            <a href="{{ url_for('order_history') }}"><button>📦 Orders</button></a>
+            <button onclick="showTab('wishlist')">❤️ Wishlist</button>
             <button onclick="showTab('settings')">⚙️ Settings</button>
             <a href="{{ url_for('logout') }}"><button>🚪 Logout</button></a>
         </div>
@@ -141,13 +142,16 @@
         </div>
     </div>
     <script>
-        function openTab(tabName) {
+        function showTab(tabName) {
             var i;
             var x = document.getElementsByClassName("tabcontent");
             for (i = 0; i < x.length; i++) {
                 x[i].style.display = "none";  
             }
             document.getElementById(tabName).style.display = "block";  
+        }
+        window.onload=function(){
+            showTab('orders');
         }
     </script>
     

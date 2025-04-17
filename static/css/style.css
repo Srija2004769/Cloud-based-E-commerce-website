@@ -537,56 +537,138 @@ form .btn:focus{
     background-color: #007f63;
 }
 
-/* ----------profile drop down container-------- */
-/* Dropdown Container */
-.dropdown {
-    position: relative;
-    display: inline-block;
+.dashboard {
+    display: flex;
+    min-height: 80vh;
+    padding: 20px;
 }
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: transparent;
-    color: white; /* change to your navbar text color */
-    padding: 10px 15px;
-    font-size: 16px;
+.sidebar {
+    width: 200px;
+    background: #f4f4f4;
+    padding: 20px;
+    border-right: 2px solid #ccc;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
     border: none;
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: left;
     cursor: pointer;
-    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
-/* Dropdown Content */
-.dropdown-content {
+.sidebar button:hover {
+    background-color: #ddd;
+}
+
+.tabcontent {
+    flex: 1;
+    padding: 20px;
     display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 150px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
+}
+/* --update profile--- */
+.tabcontent form {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Links inside dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 10px 15px;
-    text-decoration: none;
+.tabcontent form label {
     display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    margin-top: 15px;
+    color: #333;
 }
 
-/* Hover effect */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
+.tabcontent form input[type="text"],
+.tabcontent form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
 }
 
-/* Show dropdown on hover */
-.dropdown:hover .dropdown-content {
+.tabcontent form input[type="text"]:focus,
+.tabcontent form input[type="email"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.tabcontent form input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.tabcontent form input[type="submit"]:hover {
+    background-color: #4b86ab;
+}
+/* ----checkout-form---- */
+.checkout-form form {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.checkout-form form label {
     display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    margin-top: 15px;
+    color: #333;
+}
+.checkout-form form input[type="text"],
+.checkout-form form input[type="email"],
+.checkout-form form input[type="address"],
+.checkout-form form input[type="text"],
+.checkout-form form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+.checkout-form  button {
+    background-color: #4c99af;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.checkout-form button:hover {
+    background-color: #91cbef;
 }
 
-/* Optional: Change text color of the dropdown button on hover */
-.dropdown:hover .dropbtn {
-    color: #ffcc00; /* example hover color */
-}
 
 
 

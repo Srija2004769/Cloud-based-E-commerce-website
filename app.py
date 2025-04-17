@@ -221,6 +221,10 @@ def process_checkout():
 
 @app.route('/order_history')
 def order_history():
+    if 'username' not in session:
+        flash("Please login first", "warning")
+        return redirect(url_for('account'))
+    # Fetch order history for the logged-in user
     username = session.get('username')
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM orders WHERE username = %s", (username,))
@@ -228,11 +232,21 @@ def order_history():
     order_data = []
     for order in orders:
         # Fetch order items for each order
+        order_id = order[0]
         cursor.execute("select order_items.quantity, order_items.price, products.product_name, products.image_url from order_items join products on order_items.product_id=products.id where order_items.order_id=%s",(order[0],))
         items=cursor.fetchall()
         order_data.append({
-        'order':order,
-        'items':items
+            'order': {
+                'order_id': order[0],
+                'full_name': order[1],
+                'email': order[2],
+                'address': order[3],
+                'city': order[4],
+                'zip_code': order[5],
+                'payment_method': order[6],
+                'username': order[7],
+            },
+            'items': items
         })
     cursor.close()
     return render_template('order_history.html', orders=order_data)

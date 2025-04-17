@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order history</title>
+    <title>Your order history</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -29,11 +29,12 @@
         <h2>Your Orders</h2>
         {%if orders%}
         {% for entry in order_data %}
-            <h3>Order #{{ entry.order[0] }}</h3> <!-- order_id -->
-            <p><strong>Name:</strong> {{ entry.order[2] }}</p> <!-- full_name -->
-            <p><strong>Address:</strong> {{ entry.order[4] }}, {{ entry.order[5] }}, {{ entry.order[6] }}</p>
-            <p><strong>Payment:</strong> {{ entry.order[7] }}</p>
+            <h3>Order #{{ entry.order.order_id }}</h3> <!-- order_id -->
+            <p><strong>Name:</strong> {{ entry.order.full_name }}</p> <!-- full_name -->
+            <p><strong>Address:</strong> {{ entry.order.address }}, {{ entry.order.city }}, {{ entry.order.zipcode }}</p>
+            <p><strong>Payment:</strong> {{ entry.order.payment_method}}</p>
             <ul>
+            <h5>Items:</h5>
             {% for item in entry.items %}
             <li>
                 <img src="{{ url_for('static', filename=item[3]) }}" width="50">
