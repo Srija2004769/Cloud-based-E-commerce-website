@@ -163,6 +163,15 @@ def product_detail(id):
     product = cur.fetchone()
     cur.close()
     if product:
+        # Convert the product tuple into a dictionary for easier access in the template
+        # Assuming product tuple is in the format (id, product_name, price, description, image_url)
+        product = {
+            'id': product[0],
+            'product_name': product[1],
+            'price': product[2],
+            'image_url': product[4],
+            'description': product[3]
+        }
         return render_template('productdetails.html', product=product)
     else:
         flash("Product not found", "danger")
@@ -238,7 +247,6 @@ def process_checkout():
             price=product[0]
             cursor.execute("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (%s, %s, %s, %s)", (order_id, product_id, quantity, price))
     cursor.connection.commit()
-    
     cursor.close()
     #clear the cart after checkout
     session.pop('cart', None)

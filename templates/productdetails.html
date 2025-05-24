@@ -49,9 +49,9 @@
                   </div>
                 </div>
                 <div class="col-2">
-                    <p>Home/kurti-set</p>
-                    <h1>Biba Olive Green Embroidered Kurti set</h1>
-                    <h4>$50.00</h4>
+                    <p>Home/{{product.name}}</p>
+                    <h1>{{product[1]}}</h1>
+                    <h4>{{product[2]}}</h4>
                     <select >
                         <option >Select Size</option>
                         <option >XXL</option>
@@ -60,8 +60,8 @@
                         <option >M</option>
                         <option >S</option>
                     </select>
-                    <input type="number" value="1">
-                    <a href="{{ url_for('add_to_cart', id=product[0], quantity=1) }}" class="btn">Add to Cart</a>
+                    <input type="number" value="1" id="quantity" min="1" max="10">
+                    <a href="{{ url_for('add_to_cart', id=product.id, quantity=1) }}" class="btn">Add to Cart</a>
                     <h3>Product Details </h3>
                     <p>--------------------------------------------</p>
                 </div>
