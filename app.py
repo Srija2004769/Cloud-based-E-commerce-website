@@ -83,11 +83,36 @@ def login():
         cursor.close()
         if user and check_password_hash(user[3],password):
             session['username']=user[1]
-            flash('Login Succeful',"Success")
-            return redirect(url_for('index'))
+            session['role']=user[4]
+            if user[4]=="admin":
+                return redirect(url_for('admin_dashboard'))
+            else:
+                flash("Login successful!","success")
+                return redirect(url_for('index'))
         else:
             flash("Invalid credentials","danger ")
     return redirect(url_for('account'))
+
+@app.route('/admin_dashboard')
+def admin_dashboard():
+    if session.get('role') != 'admin':
+        flash("Access denied")
+        return redirect(url_for('index'))
+    
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT COUNT(*) FROM orders")
+    order_count = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM users")
+    user_count = cursor.fetchone()[0]
+
+    cursor.execute("SELECT SUM(price * quantity) FROM order_items")
+    revenue = cursor.fetchone()[0] or 0
+
+    cursor.close()
+
+    return render_template('admin_dashboard.html', order_count=order_count, user_count=user_count, revenue=revenue)
+
 
 @app.route('/logout')
 def logout():
@@ -100,6 +125,8 @@ def cart():
     cart=session.get('cart',{})
     cart_items=[]
     total =0
+    tax=0
+    grand_total=0
     for id,quantity in cart.items():
         cursor = mysql.connection.cursor()
         cursor.execute("Select id,product_name,price,image_url from products where id=%s",(id,))

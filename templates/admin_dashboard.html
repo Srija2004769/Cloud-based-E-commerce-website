@@ -1,0 +1,8 @@
+<h2>Admin Dashboard</h2>
+<p>Total Orders: {{ order_count }}</p>
+<p>Total Users: {{ user_count }}</p>
+<p>Total Revenue: ₹{{ revenue }}</p>
+
+<a href="{{ url_for('manage_orders') }}">Manage Orders</a> |
+<a href="{{ url_for('manage_products') }}">Manage Products</a>
+<a href="{{ url_for('manage_users') }}">Manage Users</a> |
