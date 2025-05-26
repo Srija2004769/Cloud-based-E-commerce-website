@@ -1,15 +1,19 @@
 from flask import Flask,render_template,url_for,request,flash,session,redirect
 from flask_mysqldb import MySQL
 import MySQLdb  # For handling DB exceptions
+import MySQLdb.cursors  # For using DictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import request, redirect, render_template, url_for
+ # Import the mysql object from your app
 
 app=Flask(__name__)
 app.secret_key='my_secret_key' # for session management 
 #MySQL configuration
-app.config['MYSQL_HOST']='localhost'
-app.config['MYSQL_USER']='root'
-app.config['MYSQL_PASSWORD']='Rootpassword@123'
-app.config['MYSQL_DB']='bytebuy'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'Rootpassword@123'
+app.config['MYSQL_DB'] = 'bytebuy'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'  # Optional: for dict results
 mysql = MySQL(app)
 
 @app.route('/')
@@ -24,7 +28,10 @@ def account():
 def profile():
     if 'username' not in session:
         flash("Please login first", "warning")
-        return redirect(url_for('account'))
+    if not hasattr(mysql, 'connection') or mysql.connection is None:
+        flash("Database connection failed. Please check your configuration.", "danger")
+        return redirect(url_for('index'))
+    cursor = mysql.connection.cursor()
     cursor = mysql.connection.cursor()
     username = session['username']
     #update profile
@@ -81,10 +88,10 @@ def login():
         # Fetch the user data from the database
         user=cursor.fetchone()
         cursor.close()
-        if user and check_password_hash(user[3],password):
-            session['username']=user[1]
-            session['role']=user[4]
-            if user[4]=="admin":
+        if user and check_password_hash(user['password'],password):
+            session['username']=user['username']
+            session['role']=user['role']  # Assuming 'role' is a column in your users table
+            if user['role']=="admin":
                 return redirect(url_for('admin_dashboard'))
             else:
                 flash("Login successful!","success")
@@ -100,17 +107,16 @@ def admin_dashboard():
         return redirect(url_for('index'))
     
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT COUNT(*) FROM orders")
-    order_count = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) as total_orders FROM orders")
+    order_count = cursor.fetchone()['total_orders']
 
     cursor.execute("SELECT COUNT(*) FROM users")
-    user_count = cursor.fetchone()[0]
+    user_count = cursor.fetchone()['COUNT(*)']
 
-    cursor.execute("SELECT SUM(price * quantity) FROM order_items")
-    revenue = cursor.fetchone()[0] or 0
+    cursor.execute("SELECT SUM(price * quantity) as revenue FROM order_items")
+    revenue = cursor.fetchone()['revenue'] or 0
 
     cursor.close()
-
     return render_template('admin_dashboard.html', order_count=order_count, user_count=user_count, revenue=revenue)
 
 
@@ -133,13 +139,13 @@ def cart():
         product = cursor.fetchone()
         cursor.close()
         if product:
-            subtotal=float(product[2])*quantity
+            subtotal=float(product['price'])*quantity
             total+=subtotal
             cart_items.append({
-                'id':product[0],
-                'product_name':product[1],
-                'price':product[2],
-                'image_url':product[3],
+                'id':product['id'],
+                'product_name':product['product_name'],
+                'price':product['price'],
+                'image_url':product['image_url'],
                 'quantity':quantity,
                 'subtotal':subtotal
             })
@@ -150,27 +156,25 @@ def cart():
 
 @app.route('/products')
 def products():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products")
-    products = cur.fetchall()
-    cur.close()
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    cursor.close()
     return render_template('products.html',products=products)
 
 @app.route('/product/<int:id>')
 def product_detail(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE id = %s", (id,))
-    product = cur.fetchone()
-    cur.close()
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM products WHERE id = %s", (id,))
+    product = cursor.fetchone()
+    cursor.close()
     if product:
-        # Convert the product tuple into a dictionary for easier access in the template
-        # Assuming product tuple is in the format (id, product_name, price, description, image_url)
         product = {
-            'id': product[0],
-            'product_name': product[1],
-            'price': product[2],
-            'image_url': product[4],
-            'description': product[3]
+            'id': product['id'],
+            'product_name': product['product_name'],
+            'price': product['price'],
+            'image_url': product['image_url'],
+            'description': product['description']
         }
         return render_template('productdetails.html', product=product)
     else:
@@ -180,6 +184,7 @@ def product_detail(id):
 @app.route('/add_to_cart/<int:id>', methods=['GET'])
 def add_to_cart(id):
     quantity=int(request.args.get('quantity',1))
+    flash("Product added to cart", "success")
     if 'cart' not in session:
         session['cart']={}
     cart=session['cart']
@@ -187,8 +192,9 @@ def add_to_cart(id):
         cart[str(id)]+=quantity
     else:
         cart[str(id)]=quantity
+    
     session['cart']=cart
-    flash("Product added to cart", "success")
+    
     return redirect(url_for('cart'))
 
 @app.route('/remove_from_cart/<int:id>', methods=['GET'])
@@ -220,39 +226,39 @@ def checkout():
         return redirect(url_for('products'))
     return render_template('checkout.html')
 
-@app.route('/process_checkout',methods=['POST'])
-def process_checkout():
-    full_name = request.form['full_name']
-    email = request.form['email']
-    address = request.form['address']
-    city = request.form['city']
-    zip_code = request.form['zip_code']
-    payment_method = request.form['payment_method']
-    cart = session.get('cart', {})
-    if not cart:
-        flash("Cart is empty","danger")
-        return redirect(url_for("products"))
-    username = session.get('username') 
-    #save the order details in the database
-    cursor = mysql.connection.cursor()
-    cursor.execute("INSERT INTO orders (username,full_name, email, address, city, zip_code, payment_method) VALUES (%s, %s, %s, %s, %s, %s, %s)", (username, full_name, email, address, city, zip_code, payment_method))
-    cursor.connection.commit()
-    #get the order id of the last inserted order
-    order_id = cursor.lastrowid
-    #save the order items in the database
-    for product_id, quantity in cart.items():
-        cursor.execute("Select price from products where id=%s",(product_id,))
-        product=cursor.fetchone()
-        if product:
-            price=product[0]
-            cursor.execute("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (%s, %s, %s, %s)", (order_id, product_id, quantity, price))
-    cursor.connection.commit()
-    cursor.close()
-    #clear the cart after checkout
-    session.pop('cart', None)
-    flash("Order placed successfully", "success")   
-    return redirect(url_for('order_summary', order_id=order_id))
-
+# @app.route('/process_checkout',methods=['POST'])
+# def process_checkout():
+#     full_name = request.form['full_name']
+#     email = request.form['email']
+#     address = request.form['address']
+#     city = request.form['city']
+#     zip_code = request.form['zip_code']
+#     payment_method = request.form['payment_method']
+#     cart = session.get('cart', {})
+#     if not cart:
+#         flash("Cart is empty","danger")
+#         return redirect(url_for("products"))
+#     username = session.get('username') 
+#     #save the order details in the database
+#     cursor = mysql.connection.cursor()
+#     cursor.execute("INSERT INTO orders (username,full_name, email, address, city, zip_code, payment_method) VALUES (%s, %s, %s, %s, %s, %s, %s)", (username, full_name, email, address, city, zip_code, payment_method))
+#     cursor.connection.commit()
+#     #get the order id of the last inserted order
+#     order_id = cursor.lastrowid
+#     #save the order items in the database
+#     for product_id, quantity in cart.items():
+#         cursor.execute("Select price from products where id=%s",(product_id,))
+#         product=cursor.fetchone()
+#         if product:
+#             price=product['price']
+#             cursor.execute("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (%s, %s, %s, %s)", (order_id, product_id, quantity, price))
+#     cursor.connection.commit()
+#     cursor.close()
+#     flash("Order placed successfully", "success")   
+#     #clear the cart after checkout
+#     session.pop('cart', None)
+    
+#     return redirect(url_for('order_summary', order_id=order_id))
 
 @app.route('/order_history')
 def order_history():
@@ -267,19 +273,20 @@ def order_history():
     order_data = []
     for order in orders:
         # Fetch order items for each order
-        order_id = order[0]
-        cursor.execute("select order_items.quantity, order_items.price, products.product_name, products.image_url from order_items join products on order_items.product_id=products.id where order_items.order_id=%s",(order[0],))
+        order_id = orders['order_id']
+        cursor.execute("select order_items.quantity, order_items.price, products.product_name, products.image_url from order_items join products on order_items.product_id=products.id where order_items.order_id=%s",(orders['order_id'],))
         items=cursor.fetchall()
         order_data.append({
-            'order': {
-                'order_id': order[0],
-                'full_name': order[1],
-                'email': order[2],
-                'address': order[3],
-                'city': order[4],
-                'zip_code': order[5],
-                'payment_method': order[6],
-                'username': order[7],
+            'orders': {
+                'order_id': orders['order_id'],
+                'full_name': order['full_name'],
+                'email': order['email'],
+                'address': order['address'],
+                'city': order['city'],
+                'zip_code': order['zip_code'],
+                'payment_method': order['payment_method'],
+                'username': order['username'],
+                'status': order['status']
             },
             'items': items
         })
@@ -292,16 +299,29 @@ def order_summary(order_id):
     # Fetch order details
     cursor.execute("SELECT * FROM orders WHERE order_id = %s", (order_id,))
     order = cursor.fetchone()
-
     # Fetch items in that order
-    cursor.execute("""SELECT oi.quantity, oi.price, p.product_name, p.image_url
-                      FROM order_items oi
-                      JOIN products p ON oi.product_id = p.id
-                      WHERE oi.order_id = %s""", (order_id,))
+    cursor.execute("""SELECT  order_items.quantity,  order_items.price, products.product_name, products.image_url
+                      FROM order_items 
+                      JOIN products  ON  order_items.product_id = products.id
+                      WHERE  order_items.order_id = %s""", (order_id,))
     items = cursor.fetchall()
+    order_items = []
+    for item in items:
+        order_items.append({
+            'quantity': item['quantity'],
+            'price': item['price'],
+            'product_name': item['product_name'],
+            'image_url': item['image_url']
+        })
+    if not order:
+        flash("Order not found", "danger")
+        return redirect(url_for('order_history'))
+    if not order_items:
+        flash("No items found in this order", "warning")
+        return redirect(url_for('order_history'))
     
     cursor.close()
-    return render_template('order_summary.html', order=order, items=items)
+    return render_template('order_summary.html', order=order, order_items=order_items , products=products)
 
 @app.route("/wishlist")
 def wishlist():
@@ -311,6 +331,80 @@ def wishlist():
     products = cursor.fetchall()
     cursor.close()
     return render_template('wishlist.html', products=products)
+    
+
+@app.route('/process_checkout', methods=['POST'])
+def process_checkout():
+    full_name = request.form['full_name']
+    email = request.form['email']
+    address = request.form['address']
+    city = request.form['city']
+    zip_code = request.form['zip_code']
+    payment_method = request.form['payment_method']
+    status = "Pending"
+
+    cur = mysql.connection.cursor()
+
+    cur.execute("""
+        INSERT INTO orders (full_name, email, address, city, zip_code, payment_method, status)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (full_name, email, address, city, zip_code, payment_method, status))
+
+    mysql.connection.commit()
+    order_id = cur.lastrowid
+    cur.close()
+
+    if payment_method == 'cod':
+        return render_template('order_success.html', order_id=order_id)
+    elif payment_method == 'card':
+        return redirect(url_for('mock_card_payment', order_id=order_id))
+    elif payment_method == 'paypal':
+        return redirect(url_for('mock_paypal_payment', order_id=order_id))
+    elif payment_method == 'bank_transfer':
+        return redirect(url_for('mock_bank_transfer', order_id=order_id))
+    else:
+        return "Invalid payment method", 400
+    
+@app.route('/mock_paypal_payment/<int:order_id>')
+def mock_paypal_payment(order_id):
+    return render_template('mock_paypal.html', order_id=order_id)
+
+@app.route('/confirm_paypal_payment/<int:order_id>', methods=['POST'])
+def confirm_paypal_payment(order_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("UPDATE orders SET status=%s WHERE order_id=%s", ("Paid - PayPal", order_id))
+    mysql.connection.commit()
+    cursor.close()
+    flash("Payment successful via PayPal!", "success")
+    return redirect(url_for('order_summary', order_id=order_id))
+
+@app.route('/admin/manage_orders')
+def manage_orders():
+    # Fetch all orders from the database
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM orders ORDER BY order_id DESC")
+    orders = cursor.fetchall()
+    cursor.close()
+    return render_template('index.html', orders=orders)
+
+@app.route('/admin/manage_products')
+def manage_products():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+    cursor.close()
+    return render_template('index.html', products=products)
+
+@app.route('/admin/manage_users')
+def manage_users():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    cursor.close()
+    return render_template('index.html')
+
+
+
 
 
 if __name__=="__main__":

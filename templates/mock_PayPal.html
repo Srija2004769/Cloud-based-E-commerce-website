@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mock PayPal Payment</title>
+</head>
+<body>
+    <h2>Mock PayPal Payment for Order #{{ order_id }}</h2>
+    <form action="{{ url_for('confirm_paypal_payment', order_id=order_id) }}" method="POST">
+        <button type="submit">Confirm PayPal Payment</button>
+    </form>
+</body>
+</html>

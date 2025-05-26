@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BYTEBUY |All products</title>
         <link rel="stylesheet" href="static/css/style.css">
-
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
@@ -45,8 +44,8 @@
                 {%if products %}
                 {%for product in products%}
                 <div class="col-2">
-                    <a href="{{ url_for('product_detail', id=product[0]) }}"><img src="{{product[4]}}"></a>
-                    <a href="{{ url_for('product_detail', id=product[0]) }}"><h4>{{product[1]}}</h4></a>
+                    <a href="{{ url_for('product_detail', id=product['id']) }}"><img src="{{url_for('static',filename=product['image_url'])}}"></a>
+                    <a href="{{ url_for('product_detail', id=product['id']) }}"><h4>{{product['product_name']}}</h4></a>
                     <div class="rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -54,7 +53,7 @@
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star-half-o"></i>
                     </div>
-                    <p>${{product[2]}}</p>
+                    <p>${{product['price']}}</p>
                 </div>
                 {%endfor%}
                 {%else%}

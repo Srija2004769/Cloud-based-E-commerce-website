@@ -37,6 +37,7 @@
             <table>
                 <tr>
                     <th>Product</th>
+                    <th>Size</th>
                     <th>Quantity</th>
                     <th>Subtotal</th>
                 </tr>
@@ -72,8 +73,9 @@
                             <td>Total</td>
                             <td>${{grand_total}}</td>
                         </tr>
-                        <a href="{{ url_for('checkout') }}" class="btn">Proceed to Checkout</a>
+                       
                     </table>
+                    <a href="{{ url_for('checkout') }}" class="btn">Proceed to Checkout</a>
                 {% else %}
                 <h2 class="title">Your cart is empty</h2>
                 <p><a href="{{ url_for('products') }}" class="btn">Continue Shopping</a></p>
